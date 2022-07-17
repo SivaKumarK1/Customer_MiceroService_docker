@@ -10,18 +10,19 @@
 
 #  Build stage
 #  
- FROM maven:3.6.0-jdk-11-slim AS build
- WORKDIR .
- COPY ./contact_service/src /home/app/src
- COPY ./contact_service/pom.xml /home/app
- RUN mvn -f /home/app/pom.xml clean package
+FROM maven:3.6.0-jdk-11-slim AS build
+EXPOSE 8082
+WORKDIR /contact_service
+COPY . /contact_service/.
+RUN mvn clean package
+ENTRYPOINT ["java","-jar","./contact_service/target/contact_service-0.0.1-SNAPSHOT.jar"]
 
 # Package stage
 #
- FROM openjdk:11-jre-slim
- COPY --from=build /home/app/target/contact_service-0.0.1-SNAPSHOT.jar /usr/local/lib/contactservice.jar
- EXPOSE 8082
- ENTRYPOINT ["java","-jar","/usr/local/lib/contactservice.jar"]
+#  FROM openjdk:11-jre-slim
+#  COPY --from=build /home/app/target/contact_service-0.0.1-SNAPSHOT.jar /usr/local/lib/contactservice.jar
+#  EXPOSE 8082
+#  ENTRYPOINT ["java","-jar","/usr/local/lib/contactservice.jar"]
 
 #FROM openjdk:11
 
