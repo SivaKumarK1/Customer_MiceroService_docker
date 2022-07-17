@@ -16,38 +16,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-#       - uses: actions/checkout@v3
-#       - name: Set up JDK 17
-#         uses: actions/setup-java@v3
-#         with:
-#           distribution: 'temurin'
-#           java-version: 17
-#       - name: Build with Maven
-#         run: mvn --version
-#       - name: current folder
-#         run: |
-#           ls
-#           cd Micro_Service_Postgres/
-#           ls
-#           sh Jars.sh
-#           echo "Done Anil"
-#           echo "Deploying images to docker hub"
-#           docker login -u "anil76201" -p "Reddy@0108"
-
-#           echo "============================================================="
-#           echo "docker deploying User Image!!!"
-#           docker build -t anil76201/userimage ./user_service
-#           #docker tag userimage anil76201/userimage
-#           docker push anil76201/userimage
-#           echo "User image pushed !!!!!"
-#           echo "============================================================="
-
-#           echo "docker deploying Contact Image!!!"
-#           docker build -t anil76201/contactimage ./contact_service
-#           #docker tag contactimage anil76201/contactimage
-#           docker push anil76201/contactimage
-#           echo "Contact image pushed !!!!!"
-#           echo "============================================================="
         #pushing images to aws ECR
       - name: Checkout
         uses: actions/checkout@v2
@@ -71,8 +39,6 @@ jobs:
           ECR_REPOSITORY_user: ${{ secrets.REPO_NAME_USER }}
           IMAGE_TAG: 1.0
         run: |  
-          cd Micro_Service_Postgres/
-          sh Jars.sh
           # Build a docker container and push it to ECR 
           echo "Building And Pushing Contact Service"
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./contact_service
